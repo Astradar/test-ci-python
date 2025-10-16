@@ -4,7 +4,7 @@
 🧠 **Objectif :** Sensibiliser les apprenants aux attaques web courantes et aux bonnes pratiques de sécurité.
 
 📍 **Lien vers le quiz :**  
-[Kahoot - Vulnérabilités Web et Sécurité](https://create.kahoot.it/details/vulnerabilites-web-et-securite/123456789)
+[Kahoot - Vulnérabilités Web et Sécurité](https://create.kahoot.it/share/kahoot-cyber/8801ad18-1e16-42b3-89ba-b731c60ca02e)
 
 ---
 
