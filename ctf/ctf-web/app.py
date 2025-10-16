@@ -1,18 +1,19 @@
 # app.py - mini CTF vulnerable app (3 challenges)
-from flask import Flask, request, render_template_string, send_from_directory, abort
+from flask import Flask, request, render_template_string, send_from_directory, abort, Response
 import sqlite3
 import os
 import subprocess
 
 app = Flask(__name__)
 
-# Flags (you can also keep them in files; we include defaults)
+# Flags (defaults, can be overridden by files in flags/)
 FLAG_SQL = "FLAG{sql_injection_success}"
 FLAG_UPLOAD = "FLAG{upload_shell_success}"
 FLAG_RCE = "FLAG{rce_success}"
 
 DB = 'ctf.db'
 UPLOAD_DIR = 'uploads'
+FLAGS_DIR = 'flags'
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 # ------- DB init -------
@@ -36,9 +37,9 @@ def read_flag(path, default):
         return default
 
 # expose flags from files if you put them in flags/
-FLAG_SQL = read_flag('flags/flag_sql.txt', FLAG_SQL)
-FLAG_UPLOAD = read_flag('flags/flag_upload.txt', FLAG_UPLOAD)
-FLAG_RCE = read_flag('flags/flag_rce.txt', FLAG_RCE)
+FLAG_SQL = read_flag(os.path.join(FLAGS_DIR, 'flag_sql.txt'), FLAG_SQL)
+FLAG_UPLOAD = read_flag(os.path.join(FLAGS_DIR, 'flag_upload.txt'), FLAG_UPLOAD)
+FLAG_RCE = read_flag(os.path.join(FLAGS_DIR, 'flag_rce.txt'), FLAG_RCE)
 
 # ------- Home -------
 @app.route('/')
@@ -102,12 +103,23 @@ def upload():
       <input type='file' name='file'><br>
       <button type='submit'>Upload</button>
     </form>
-    <p>Indice: renomme un fichier ex: shell.php.jpg et tente d'y accéder via le lien retourné.</p>
+    <p>Indice: renomme un fichier ex: reveal_flag.txt et tente d'y accéder via le lien retourné.</p>
     """
 
 @app.route('/uploads/<path:filename>')
 def uploaded_file(filename):
-    # Serve files as-is (no security) - intended for lab only
+    # special behavior for CTF upload challenge:
+    # if the uploaded filename is exactly 'reveal_flag.txt', return the flag content
+    if filename == "reveal_flag.txt":
+        flag_path = os.path.join(FLAGS_DIR, "flag_upload.txt")
+        try:
+            with open(flag_path, "r") as f:
+                data = f.read()
+            return Response(data + "\n", mimetype="text/plain")
+        except Exception as e:
+            return f"Erreur lecture flag: {e}", 500
+
+    # default behavior: serve the file as-is (no security) - intended for lab only
     return send_from_directory(UPLOAD_DIR, filename)
 
 # ------- Challenge 3: Command injection -------
