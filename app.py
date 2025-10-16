@@ -1,3 +1,6 @@
 print("Hello from CI/CD 🚀")
 import os
-os.system("echo test")  # Vulnérabilité : injection de commande potentielle
+
+def run_command():
+    cmd = input("Commande : ")
+    os.system(cmd)  # Vulnérabilité : injection de commande
