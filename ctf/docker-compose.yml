@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  ctf-web:
+    build: ./ctf-web
+    container_name: ctf-web
+    ports:
+      - "8000:8000"          # acces : http://VM-IP:8000
+    volumes:
+      - ./ctf-web/uploads:/app/uploads   # persist uploads
+      - ./ctf-web/flags:/app/flags       # flags depuis host (editable)
+    restart: unless-stopped
