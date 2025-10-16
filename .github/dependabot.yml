@@ -1,0 +1,7 @@
+version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/"  # le répertoire où se trouve requirements.txt
+    schedule:
+      interval: "weekly"  # vérifie les vulnérabilités chaque semaine
+    open-pull-requests-limit: 5
