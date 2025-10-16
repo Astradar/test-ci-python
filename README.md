@@ -3,7 +3,7 @@
 **Résumé** : Dépôt de démonstration pour la mise en place d’une CI sécurisée (GitHub Actions + CodeQL) + SCA (Dependabot) et module pédagogique (Kahoot + mini-CTF via CTFd).
 
 🔗 Liens rapides :
-- **CTF (CTFd)** : https://ctfd.example.com (ou `https://tonpseudo.github.io/ctf/` si hébergé via Pages)  
+- **CTF (CTFd)** : En cours....
 - **Quiz Kahoot** : https://create.kahoot.it/share/kahoot-cyber/8801ad18-1e16-42b3-89ba-b731c60ca02e
 - **Docs / Challenges** : `docs/ctf_description.md` et `kahoot_questions.md` (dans ce repo)
 
