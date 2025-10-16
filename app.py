@@ -1,6 +1,15 @@
-print("Hello from CI/CD 🚀")
+# app.py (démo RCE)
+from flask import Flask, request
 import os
 
-def run_command():
-    cmd = input("Commande : ")
-    os.system(cmd)  # Vulnérabilité : injection de commande
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return "ok"
+
+@app.route('/rce')
+def rce():
+    cmd = request.args.get('cmd')        # <-- entrée utilisateur non filtrée
+    os.system(cmd)                       # <-- vulnérabilité volontaire
+    return "executed"
